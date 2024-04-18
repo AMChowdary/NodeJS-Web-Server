@@ -9,7 +9,7 @@ const PORT = 8080;
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    console.log(Received ${req.method} request for ${req.url});
+    console.log(`Received ${req.method} request for ${req.url}`);
     next();
 });
 
@@ -28,7 +28,7 @@ app.post('/createFile', (req, res) => {
 
     fs.writeFile(filename, content, (err) => {
         if (err) {
-            console.error(Error creating file: ${err.message});
+            console.error(`Error creating file: ${err.message}`);
             return res.status(500).json({ error: 'Error creating file.' });
         }
         res.status(200).json({ message: 'File created successfully.' });
@@ -38,7 +38,7 @@ app.post('/createFile', (req, res) => {
 app.get('/getFiles', (req, res) => {
     fs.readdir(__dirname, (err, files) => {
         if (err) {
-            console.error(Error reading directory: ${err.message});
+            console.error(`Error reading directory: ${err.message}`);
             return res.status(500).json({ error: 'Error reading directory.' });
         }
         res.status(200).json({ files });
@@ -54,7 +54,7 @@ app.get('/getFile/:filename', (req, res) => {
 
     fs.readFile(filename, 'utf8', (err, data) => {
         if (err) {
-            console.error(Error reading file: ${err.message});
+            console.error(`Error reading file: ${err.message}`);
             return res.status(400).json({ error: 'File not found.' });
         }
         res.status(200).json({ content: data });
@@ -70,7 +70,7 @@ app.put('/modifyFile/:filename', (req, res) => {
 
     fs.writeFile(filename, content, (err) => {
         if (err) {
-            console.error(Error modifying file: ${err.message});
+            console.error(`Error modifying file: ${err.message}`);
             return res.status(500).json({ error: 'Error modifying file.' });
         }
         res.status(200).json({ message: 'File modified successfully.' });
@@ -87,7 +87,7 @@ app.delete('/deleteFile/:filename', (req, res) => {
 
     fs.unlink(filename, (err) => {
         if (err) {
-            console.error(Error deleting file: ${err.message});
+            console.error(`Error deleting file: ${err.message}`);
             return res.status(400).json({ error: 'File not found or unable to delete.' });
         }
         res.status(200).json({ message: 'File deleted successfully.' });
@@ -95,5 +95,5 @@ app.delete('/deleteFile/:filename', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(Server running on port ${PORT});
+    console.log(`Server running on port ${PORT}`);
 });
